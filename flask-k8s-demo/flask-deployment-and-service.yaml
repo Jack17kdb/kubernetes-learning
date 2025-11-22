@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+   name: flask-deployment
+   labels:
+      app: flask-demo
+      environment: demo
+spec:
+   replicas: 1
+   selector:
+      matchLabels:
+         app: flask-demo
+      template:
+         metadata:
+            labels:
+               app: flask-demo
+               environment: demo
+         spec:
+            containers:
+               - name: flask-container
+                 image: jack17kdb/flask-demo:latest
+                 ports:
+                    - containerPort: 5000
+                 resources:
+                    limits:
+                       cpu: "500m"
+                       memory: "256Mi"
+                    requests:
+                       cpu: "200m"
+                       memory: "128Mi"
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+   name: flask-service
+   labels:
+      app: flask-demo
+spec:
+   selector:
+      app: flask-demo
+   ports:
+      - protocol: TCP
+        port: 80
+        targetPort: 5000
+   type: ClusterIP
