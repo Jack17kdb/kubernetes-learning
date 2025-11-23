@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+   name: rex-deployment
+   labels:
+      app: rex-flask
+      environment: rex
+
+spec:
+   replicas: 1
+   selector:
+      matchLabels:
+         app: rex-flask
+   template:
+      metadata:
+         labels:
+            app: rex-flask
+            environment: rex
+      spec:
+         containers:
+            - name: rex-container
+              image: jack17kdb/rex-flask:latest
+              ports:
+                 - containerPort: 5000
+              resources:
+                 limits:
+                    cpu: "500m"
+                    memory: "256Mi"
+                 requests:
+                    cpu: "200m"
+                    memory: "128Mi"

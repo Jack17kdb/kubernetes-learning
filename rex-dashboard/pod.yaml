@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+   name: rex-pod
+   labels:
+      app: rex-flask
+      environment: rex
+spec:
+   containers:
+      - name: rex-container
+        image: jack17kdb/rex-flask:latest
+        ports:
+           - containerPort: 5000
